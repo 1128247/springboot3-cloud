@@ -1,0 +1,5 @@
+rootProject.name = 'SpringProject'
+include 'service-02','service-01'
+include 'service-02'
+include 'api-interface'
+
