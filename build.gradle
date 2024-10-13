@@ -51,6 +51,12 @@ subprojects {
         implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.3.0'
         implementation 'org.apache.dubbo.extensions:dubbo-registry-consul:1.0.1'
         implementation 'org.apache.dubbo.extensions:dubbo-configcenter-consul:3.3.0'
+        implementation 'com.mysql:mysql-connector-j:8.4.0'
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+        implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.2.7'
+        implementation 'com.alibaba:druid-spring-boot-3-starter:1.2.23'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.7'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.7'
     }
 
     test {
