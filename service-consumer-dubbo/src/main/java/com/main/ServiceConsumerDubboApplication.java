@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableDubbo
 @SpringBootApplication
-public class Service02Application {
+public class ServiceConsumerDubboApplication {
   public static void main(String[] args) {
-    SpringApplication.run(Service02Application.class, args);
+    SpringApplication.run(ServiceConsumerDubboApplication.class, args);
   }
 }

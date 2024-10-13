@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.7' // 替换为需要的版本
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.main'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':api-interface')
+}
+
+test {
+    useJUnitPlatform()
+}
