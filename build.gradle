@@ -57,8 +57,15 @@ subprojects {
         implementation 'com.alibaba:druid-spring-boot-3-starter:1.2.23'
         implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.7'
         testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.7'
-    }
+        // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-context
+        implementation 'org.springframework.cloud:spring-cloud-context:4.1.4'
+// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
+        implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4'
 
+    }
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs.add("-parameters")
+    }
     test {
         useJUnitPlatform()
     }
