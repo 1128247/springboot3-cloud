@@ -52,15 +52,18 @@ subprojects {
         implementation 'org.apache.dubbo.extensions:dubbo-registry-consul:1.0.1'
         implementation 'org.apache.dubbo.extensions:dubbo-configcenter-consul:3.3.0'
         implementation 'com.mysql:mysql-connector-j:8.4.0'
-        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
         implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.2.7'
         implementation 'com.alibaba:druid-spring-boot-3-starter:1.2.23'
         implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.7'
         testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.7'
-        // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-context
         implementation 'org.springframework.cloud:spring-cloud-context:4.1.4'
-// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4'
+        compileOnly 'org.projectlombok:lombok:1.18.34'
+        //if not have this line code, lombok will not be  Effective
+        annotationProcessor 'org.projectlombok:lombok:1.18.34'
+        implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.7'
+
+
 
     }
     tasks.withType(JavaCompile).configureEach {

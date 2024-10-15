@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     implementation project(':api-interface')
+    implementation project(':database-service')
 }
 
 test {
