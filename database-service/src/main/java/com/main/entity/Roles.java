@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Roles implements Serializable {
+public class Roles implements Serializable, GrantedAuthority {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,4 +25,9 @@ public class Roles implements Serializable {
     private Integer id;
 
     private String name;
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

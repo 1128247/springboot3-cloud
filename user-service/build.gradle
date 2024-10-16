@@ -2,7 +2,6 @@ plugins {
     id 'java'
 }
 
-
 group = 'com.main'
 version = '1.0-SNAPSHOT'
 
@@ -13,17 +12,17 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'com.baomidou:mybatis-plus-generator:3.5.7'
-    // https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter
-
-    // https://mvnrepository.com/artifact/org.freemarker/freemarker
-    implementation 'org.freemarker:freemarker:2.3.33'
+    implementation project(':database-service')
+    implementation project(':common')
     implementation "com.mysql:mysql-connector-j:$mysqlVersion"
-    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springStarterVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:$springStarterVersion"
     implementation "com.alibaba:druid-spring-boot-3-starter:$druidVersion"
-    implementation "org.springframework.boot:spring-boot-starter-data-redis:${springStarterVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis:$springStarterVersion"
     implementation "com.baomidou:mybatis-plus-spring-boot3-starter:$mybatisPlusVersion"
     implementation "org.springframework.boot:spring-boot-starter-security:$springStarterVersion"
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
 }
 

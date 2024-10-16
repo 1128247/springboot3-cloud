@@ -64,6 +64,9 @@ subprojects {
         compileOnly 'org.projectlombok:lombok:1.18.34'
         //if not have this line code, lombok will not be  Effective
         annotationProcessor 'org.projectlombok:lombok:1.18.34'
+        // https://mvnrepository.com/artifact/cn.hutool/hutool-all
+        implementation 'cn.hutool:hutool-all:5.8.32'
+
     }
     tasks.withType(JavaCompile).configureEach {
         options.compilerArgs.add("-parameters")
