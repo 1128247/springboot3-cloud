@@ -14,6 +14,11 @@ repositories {
 dependencies {
     implementation project(':api-interface')
     implementation project(':database-service')
+    implementation "com.mysql:mysql-connector-j:$mysqlVersion"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:$springStarterVersion"
+    implementation "com.alibaba:druid-spring-boot-3-starter:$druidVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis:$springStarterVersion"
+    implementation "com.baomidou:mybatis-plus-spring-boot3-starter:$mybatisPlusVersion"
 }
 
 test {

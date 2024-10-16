@@ -18,6 +18,11 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.freemarker/freemarker
     implementation 'org.freemarker:freemarker:2.3.33'
+    implementation "com.mysql:mysql-connector-j:$mysqlVersion"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springStarterVersion}"
+    implementation "com.alibaba:druid-spring-boot-3-starter:$druidVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis:${springStarterVersion}"
+    implementation "com.baomidou:mybatis-plus-spring-boot3-starter:$mybatisPlusVersion"
 
 }
 

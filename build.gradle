@@ -6,6 +6,13 @@ plugins {
 
 group = 'com.main'
 version = '1.0-SNAPSHOT'
+ext {
+    mysqlVersion = '8.4.0'
+    springStarterVersion = '3.2.7'
+    druidVersion = '1.2.23'
+    mybatisPlusVersion = '3.5.7'
+}
+
 
 repositories {
     mavenCentral()
@@ -42,29 +49,21 @@ subprojects {
     }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter:3.2.7'
+        implementation "org.springframework.boot:spring-boot-starter:${springStarterVersion}"
         implementation 'org.springframework.cloud:spring-cloud-starter:4.1.4'
         implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery:4.1.2'
         implementation 'org.springframework.cloud:spring-cloud-starter-consul-config:4.1.2'
-        implementation 'org.springframework.boot:spring-boot-starter-web:3.2.7'
-        implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.7'
+        implementation "org.springframework.boot:spring-boot-starter-web:${springStarterVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-actuator:${springStarterVersion}"
         implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.3.0'
         implementation 'org.apache.dubbo.extensions:dubbo-registry-consul:1.0.1'
         implementation 'org.apache.dubbo.extensions:dubbo-configcenter-consul:3.3.0'
-        implementation 'com.mysql:mysql-connector-j:8.4.0'
-        implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.2.7'
-        implementation 'com.alibaba:druid-spring-boot-3-starter:1.2.23'
-        implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.7'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.7'
+        testImplementation "org.springframework.boot:spring-boot-starter-test:${springStarterVersion}"
         implementation 'org.springframework.cloud:spring-cloud-context:4.1.4'
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4'
         compileOnly 'org.projectlombok:lombok:1.18.34'
         //if not have this line code, lombok will not be  Effective
         annotationProcessor 'org.projectlombok:lombok:1.18.34'
-        implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.7'
-
-
-
     }
     tasks.withType(JavaCompile).configureEach {
         options.compilerArgs.add("-parameters")
