@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,7 @@ public class Users implements Serializable, UserDetails {
     private Integer id;
 
     private String username;
-
+    @JsonIgnore
     private String password;
 
     private Boolean enabled;
@@ -44,6 +45,9 @@ public class Users implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
+    }
+    public void setAuthorities(List<Roles> roles) {
+        this.roles = roles;
     }
 
     @Override

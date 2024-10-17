@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
       throw new UsernameNotFoundException("用户不存在");
     }
     List<Roles> roles = rolesMapper.selectRolesByUserId(users.getId());
-
+    users.setRoles(roles);
     return users;
   }
 }

@@ -14,14 +14,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -49,9 +45,13 @@ public class SecurityConfiguration {
     return new ProviderManager(List.of(provider));
   }
   @Bean
+  AuthenticationFilter authenticationFilter() {
+    return new AuthenticationFilter();
+  }
+  @Bean
   public LoginAuthenticationFilter loginAuthenticationFilter(AuthenticationManager authenticationManager) {
     LoginAuthenticationFilter loginAuthenticationFilter = new LoginAuthenticationFilter(authenticationManager);
-    loginAuthenticationFilter.setFilterProcessesUrl("/user/login");
+    loginAuthenticationFilter.setFilterProcessesUrl("/login");
     loginAuthenticationFilter.setAuthenticationSuccessHandler(successHandler);
     loginAuthenticationFilter.setAuthenticationFailureHandler(failureHandler);
     return loginAuthenticationFilter;
@@ -75,27 +75,23 @@ public class SecurityConfiguration {
 
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
-                                          LoginAuthenticationFilter loginAuthenticationFilter) throws Exception {
+                                          LoginAuthenticationFilter loginAuthenticationFilter, AuthenticationFilter authenticationFilter) throws Exception {
 
     Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer =
         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-            .requestMatchers("/", "/ping","/user/login", "/public/**", "/webjars/**", "/static/**", "/index.html", "/assets/**", "/geoserver/cite/wms")
+            .requestMatchers("/", "/login")
             .permitAll()
             .anyRequest()
             .authenticated();
-
-    Customizer<CorsConfigurer<HttpSecurity>> corsConfigurerCustomizer = httpSecurityCorsConfigurer ->
-        httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());
-
-    Customizer<CsrfConfigurer<HttpSecurity>> csrfConfigurerCustomizer = AbstractHttpConfigurer::disable;
-
     return httpSecurity
-        .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//        .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        .cors(corsConfigurerCustomizer)
-        .csrf(csrfConfigurerCustomizer)
+//        .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .cors(AbstractHttpConfigurer::disable)
+        .csrf(AbstractHttpConfigurer::disable)
+        .requestCache(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(authorizeHttpRequestsCustomizer)
-        .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .sessionManagement(AbstractHttpConfigurer::disable)
+        .anonymous(AbstractHttpConfigurer::disable)
         .build();
   }
 

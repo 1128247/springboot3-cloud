@@ -3,6 +3,8 @@ package com.main.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,8 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @author Your Name
  * @since 2024-10-15
  */
-@Getter
-@Setter
+@Data
 public class Roles implements Serializable, GrantedAuthority {
 
     private static final long serialVersionUID = 1L;
@@ -29,5 +30,8 @@ public class Roles implements Serializable, GrantedAuthority {
     @Override
     public String getAuthority() {
         return name;
+    }
+    public void setAuthority(String name) {
+        this.name = name;
     }
 }
