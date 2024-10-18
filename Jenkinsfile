@@ -8,7 +8,11 @@ pipeline {
                 checkout scm
             }
         }
-
+         stage('Set Permissions') {
+                    steps {
+                        sh 'chmod +x gradlew'
+                    }
+                }
         stage('Build') {
             steps {
                 // 使用Maven构建项目
