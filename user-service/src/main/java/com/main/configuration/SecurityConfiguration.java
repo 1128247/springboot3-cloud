@@ -45,10 +45,6 @@ public class SecurityConfiguration {
     return new ProviderManager(List.of(provider));
   }
   @Bean
-  AuthenticationFilter authenticationFilter() {
-    return new AuthenticationFilter();
-  }
-  @Bean
   public LoginAuthenticationFilter loginAuthenticationFilter(AuthenticationManager authenticationManager) {
     LoginAuthenticationFilter loginAuthenticationFilter = new LoginAuthenticationFilter(authenticationManager);
     loginAuthenticationFilter.setFilterProcessesUrl("/login");
@@ -75,7 +71,7 @@ public class SecurityConfiguration {
 
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
-                                          LoginAuthenticationFilter loginAuthenticationFilter, AuthenticationFilter authenticationFilter) throws Exception {
+                                          LoginAuthenticationFilter loginAuthenticationFilter) throws Exception {
 
     Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer =
         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
@@ -84,8 +80,7 @@ public class SecurityConfiguration {
             .anyRequest()
             .authenticated();
     return httpSecurity
-//        .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .cors(AbstractHttpConfigurer::disable)
         .csrf(AbstractHttpConfigurer::disable)
         .requestCache(AbstractHttpConfigurer::disable)

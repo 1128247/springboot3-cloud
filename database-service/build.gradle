@@ -23,7 +23,9 @@ dependencies {
     implementation "com.alibaba:druid-spring-boot-3-starter:$druidVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-redis:${springStarterVersion}"
     implementation "com.baomidou:mybatis-plus-spring-boot3-starter:$mybatisPlusVersion"
-    implementation "org.springframework.boot:spring-boot-starter-security:$springStarterVersion"
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+    implementation 'org.springframework.security:spring-security-core:6.3.3'
+
 
 }
 
