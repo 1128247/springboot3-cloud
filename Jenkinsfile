@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 // 使用Maven构建项目
-                sh './mvnw clean package' // 如果你使用Gradle，使用 ./gradlew build
+                sh './gradlew build' // 如果你使用Gradle，使用 ./gradlew build
             }
         }
 
