@@ -13,12 +13,24 @@ pipeline {
                         sh 'chmod +x gradlew'
                     }
                 }
-        stage('Build') {
-            steps {
-                // 使用Maven构建项目
-                sh './gradlew build' // 如果你使用Gradle，使用 ./gradlew build
-            }
-        }
+     stage('Build') {
+         steps {
+             script {
+                 dir('service-router') {
+                     sh './gradlew build'
+                 }
+                 dir('user-service') {
+                     sh './gradlew build'
+                 }
+                 dir('service-consumer-dubbo') {
+                     sh './gradlew build'
+                 }
+                   dir('service-provider-dubbo') {
+                                      sh './gradlew build'
+                                  }
+             }
+         }
+     }
 
         stage('Docker Build') {
             steps {
@@ -33,8 +45,8 @@ pipeline {
                      dir('service-consumer-dubbo') {
                          docker.build("service-consumer-dubbo:${env.BUILD_ID}")
                      }
-                    dir('service-consumer-dubbo') {
-                        docker.build("service-consumer-dubbo:${env.BUILD_ID}")
+                    dir('service-provider-dubbo') {
+                        docker.build("service-provider-dubbo:${env.BUILD_ID}")
                     }
                 }
             }
