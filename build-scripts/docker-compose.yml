@@ -1,0 +1,18 @@
+version: '3'
+services:
+  service-router:
+    image: service-router:$BUILD_ID
+    ports:
+      - "8003:8003"
+  user-service:
+    image: user-service:$BUILD_ID
+    ports:
+      - "8004:8004"
+  service-consumer-dubbo:
+    image: service-consumer-dubbo:$BUILD_ID
+    ports:
+      - "8001:8001"
+  service-provider-dubbo:
+    image: service-provider-dubbo:$BUILD_ID
+    ports:
+      - "8002:8002"

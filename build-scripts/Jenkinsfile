@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+  environment {
+        BUILD_ID = "${sh(script: 'date +%Y%m%d%H%M%S', returnStdout: true).trim()}"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                // 从SCM获取代码
+                checkout scm
+            }
+        }
+         stage('Set Permissions') {
+                    steps {
+                        sh 'chmod +x gradlew'
+                    }
+                }
+     stage('Build') {
+         steps {
+             script {
+                 dir('service-router') {
+                     sh '../gradlew bootJar'
+                 }
+                 dir('user-service') {
+                     sh '../gradlew bootJar'
+                 }
+                 dir('service-consumer-dubbo') {
+                     sh '../gradlew bootJar'
+                 }
+                   dir('service-provider-dubbo') {
+                                      sh '../gradlew bootJar'
+                                  }
+             }
+         }
+     }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    // 针对每个模块构建Docker镜像
+                    dir('service-router') {
+                        docker.build("service-router:${env.BUILD_ID}")
+                    }
+                    dir('user-service') {
+                        docker.build("user-service:${env.BUILD_ID}")
+                    }
+                     dir('service-consumer-dubbo') {
+                         docker.build("service-consumer-dubbo:${env.BUILD_ID}")
+                     }
+                    dir('service-provider-dubbo') {
+                        docker.build("service-provider-dubbo:${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+             script {
+                    // Replace environment variables in docker-compose.yml
+                    sh """
+                        export BUILD_ID=${env.BUILD_ID}
+                        envsubst < /home/xyw/Desktop/docker/spring-cloud/docker-compose.yml > /tmp/docker-compose.temp.yml
+                    """
+
+                    // Use the temp docker-compose file to start containers
+                    sh "docker compose --env-file .env -f /tmp/docker-compose.temp.yml up -d"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '部署成功！'
+        }
+        failure {
+            echo '部署失败！'
+        }
+    }
+}
