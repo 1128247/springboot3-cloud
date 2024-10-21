@@ -1,4 +1,3 @@
 rootProject.name = 'spring-cloud-dubbo-springboot3'
-include 'api-interface' ,'service-consumer-dubbo' ,'service-provider-dubbo', 'database-service' ,'service-router', 'user-service'
-include 'common'
+include 'api-interface' ,'service-consumer-dubbo' ,'service-provider-dubbo', 'database-service' ,'service-router', 'user-service', 'common'
 

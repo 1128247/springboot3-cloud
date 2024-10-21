@@ -65,7 +65,7 @@ pipeline {
                     """
 
                     // Use the temp docker-compose file to start containers
-                    sh "docker compose --env-file .env -f /tmp/docker-compose.temp.yml up -d"
+                    sh "docker compose -f /tmp/docker-compose.temp.yml up -d"
                 }
             }
         }
