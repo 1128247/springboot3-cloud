@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -20,16 +23,26 @@ public class SecurityConfiguration {
   }
 
   @Bean
-  public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity httpSecurity, AuthenticationFilter authenticationFilter) {
-    return httpSecurity.addFilterBefore(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION) .authorizeExchange(
-            authorizeExchange -> {
-              authorizeExchange
-                  .pathMatchers("/actuator/**", "/user/data", "/user/login")
-                  .permitAll()
-                  .anyExchange()
-                  .authenticated();
-            }).csrf(ServerHttpSecurity.CsrfSpec::disable)
-        .cors(ServerHttpSecurity.CorsSpec::disable)
+  public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity httpSecurity, AuthenticationFilter authenticationFilter, CorsConfigurationSource corsConfigurationSource) {
+    return httpSecurity.addFilterBefore(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION).authorizeExchange(
+            authorizeExchange -> authorizeExchange
+                .pathMatchers("/actuator/**", "/user/data", "/user/login")
+                .permitAll()
+                .anyExchange()
+                .authenticated()).csrf(ServerHttpSecurity.CsrfSpec::disable)
+        .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource))
         .build();
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.addAllowedOriginPattern("*"); // 允许所有源
+    configuration.addAllowedMethod("*"); // 允许所有方法
+    configuration.addAllowedHeader("*"); // 允许所有头部
+    configuration.setAllowCredentials(true); // 允许凭证
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
   }
 }
