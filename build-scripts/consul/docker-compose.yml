@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  consul-server1:
+    image: hashicorp/consul:latest
+    restart: always
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    volumes:
+      - ./consul-config-node1.hcl:/consul/config/consul-config.hcl
+    command: agent -server -client=0.0.0.0 -node=consul1 -config-file=/consul/config/consul-config.hcl -bind=0.0.0.0 -bootstrap-expect=3
+
+  consul-server2:
+    image: hashicorp/consul:latest
+    restart: always
+    ports:
+      - "8501:8500"
+      - "8601:8600/udp"
+    volumes:
+      - ./consul-config-node2.hcl:/consul/config/consul-config.hcl
+    command: agent -server -client=0.0.0.0 -node=consul2 -config-file=/consul/config/consul-config.hcl -bind=0.0.0.0 -retry-join=consul-server1 -retry-join=consul-server3
+
+  consul-server3:
+    image: hashicorp/consul:latest
+    restart: always
+    ports:
+      - "8502:8500"
+      - "8602:8600/udp"
+    volumes:
+      - ./consul-config-node3.hcl:/consul/config/consul-config.hcl
+    command: agent -server -client=0.0.0.0 -node=consul3 -config-file=/consul/config/consul-config.hcl -bind=0.0.0.0 -retry-join=consul-server1 -retry-join=consul-server2
+
+networks:
+  default:
+    driver: bridge
