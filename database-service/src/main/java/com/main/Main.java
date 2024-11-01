@@ -7,11 +7,10 @@ import java.nio.file.Paths;
 
   public class Main {
     public static void main(String[] args) {
-      FastAutoGenerator.create("jdbc:mysql://192.168.1.107:3306/spring_security_leaning?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8", "root", "123456")
+      FastAutoGenerator.create("jdbc:mysql://192.168.1.102:3306/spring_security_leaning?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8", "root", "123456")
           .globalConfig(builder -> builder
-              .outputDir("C:\\Users\\Mark42\\IdeaProjects\\SpringProject\\database-service\\src\\main\\java")
-              .author("Your Name") // 添加作者信息
-              .enableSwagger() // 开启 Swagger 模式
+              .outputDir("C:\\Users\\Mark42\\IdeaProjects\\springboot3-cloud\\database-service\\src\\main\\java")
+              .author("Andres") // 添加作者信息
               .commentDate("yyyy-MM-dd")
           )
           .packageConfig(builder -> builder
@@ -22,14 +21,19 @@ import java.nio.file.Paths;
           )
           .strategyConfig(builder -> builder
               .entityBuilder()
-              .enableLombok() // 开启 Lombok
+              .enableFileOverride()//是否覆盖
+              .enableLombok()// 开启 Lombok
               .build() // 必须调用 build()
               .mapperBuilder()
+              .enableFileOverride()
+              .enableBaseColumnList()
+              .enableBaseResultMap()
               .build() // 必须调用 build()
-              .serviceBuilder()
+              .serviceBuilder().disable()
               .build() // 必须调用 build()
-              .controllerBuilder()
+              .controllerBuilder().disable()
               .build()// 必须调用 build()
+
           )
           .templateEngine(new FreemarkerTemplateEngine())
           .execute();

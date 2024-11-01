@@ -3,9 +3,9 @@ package com.main.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
  */
 @Getter
 @Setter
-public class Roles implements Serializable, GrantedAuthority {
+public class Merchants implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,11 +26,16 @@ public class Roles implements Serializable, GrantedAuthority {
 
     private String name;
 
-    @Override
-    public String getAuthority() {
-        return name;
-    }
-    public void setAuthority(String name) {
-        this.name = name;
-    }
+    private String description;
+
+    private String phone;
+
+    private String address;
+
+    /**
+     * 商家封面
+     */
+    private String cover;
+
+    private LocalDateTime createdAt;
 }

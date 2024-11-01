@@ -1,6 +1,6 @@
 package com.main.mapper;
 
-import com.main.entity.Users;
+import com.main.entity.MenuItems;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Andres
  * @since 2024-11-01
  */
-public interface UsersMapper extends BaseMapper<Users> {
+public interface MenuItemsMapper extends BaseMapper<MenuItems> {
 
 }

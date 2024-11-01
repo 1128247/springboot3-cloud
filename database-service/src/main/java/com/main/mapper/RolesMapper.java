@@ -10,10 +10,9 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @author Your Name
- * @since 2024-10-15
+ * @author Andres
+ * @since 2024-11-01
  */
 public interface RolesMapper extends BaseMapper<Roles> {
-
   List<Roles> selectRolesByUserId(Integer id);
 }

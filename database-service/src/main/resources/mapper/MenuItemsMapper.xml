@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.main.mapper.MenuItemsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.main.entity.MenuItems">
+        <id column="id" property="id" />
+        <result column="cover" property="cover" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="merchant_name" property="merchantName" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="price" property="price" />
+        <result column="available" property="available" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, cover, merchant_id, merchant_name, name, description, price, available, created_at
+    </sql>
+
+</mapper>

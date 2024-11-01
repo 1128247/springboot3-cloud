@@ -3,70 +3,76 @@ package com.main.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
- * @author Your Name
- * @since 2024-10-15
+ * @author Andres
+ * @since 2024-11-01
  */
-@Data
+@Getter
+@Setter
 public class Users implements Serializable, UserDetails {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
 
-    private String username;
-    @JsonIgnore
-    private String password;
+  private String username;
 
-    private Boolean enabled;
+  private String password;
 
-    private Boolean accountNonExpired;
+  private Boolean enabled;
 
-    private Boolean accountNonLocked;
+  private Boolean accountNonExpired;
 
-    private Boolean credentialsNonExpired;
-    @TableField(exist = false)
-    private List<Roles> roles;
+  private Boolean accountNonLocked;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
-    public void setAuthorities(List<Roles> roles) {
-        this.roles = roles;
-    }
+  private Boolean credentialsNonExpired;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return this.accountNonExpired;
-    }
+  private String phone;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return this.accountNonLocked;
-    }
+  @TableField(exist = false)
+  private List<Roles> roles;
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return this.credentialsNonExpired;
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
+  public void setAuthorities(List<Roles> roles) {
+    this.roles = roles;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return this.accountNonExpired;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return this.accountNonLocked;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return this.credentialsNonExpired;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return this.enabled;
+  }
 }
